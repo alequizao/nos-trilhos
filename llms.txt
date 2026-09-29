@@ -1,0 +1,13 @@
+# Nos Trilhos — Alex · Lula · Flávio
+<!-- Nos Trilhos · Desenvolvido por Alequizao <alequizao.dev@gmail.com> -->
+
+> Jogo de corrida infinita (endless runner) 3D grátis, no estilo Subway Surfers, que roda no navegador do celular ou do PC, sem instalar e sem cadastro. Junta três jogos numa só pista: escolha a turma do Alex (Alex, Duda, Bento, Nina Neon), o Lula ou o Flávio, desvie dos trens, pegue moedas e fuja do segurança. Endereço: https://alequizao.com/trilhos/
+
+- Aviso: paródia de humor, sem fins políticos. Não é afiliado a partido ou governo; não contém propaganda eleitoral.
+- Personagens: turma do Alex (o Alex de boné virado e jaqueta laranja, Duda, Bento e Nina Neon), caricatura simpática do Lula e caricatura simpática do Flávio Bolsonaro, cada um com seus visuais na loja.
+- Jogabilidade: 3 trilhos; deslizar para os lados troca de trilho, para cima pula, para baixo rola; toque duplo usa a prancha (aguenta uma batida).
+- Obstáculos: trens parados, trens na contramão (farol aceso), barreiras listradas (pular), placas ABAIXE! (rolar), tapumes de obra (desviar), rampas para correr em cima dos trens.
+- Poderes: ímã de moedas, jetpack, tênis mola, pontos 2x. Loja de visuais, pranchas e melhorias; missões com multiplicador; ranking online.
+- Tecnologia: Three.js (WebGL), áudio sintetizado com WebAudio, PWA com funcionamento offline.
+- Preço: grátis. Idioma: português do Brasil. Versão: 1.0.0.
+- Desenvolvedor: Alequizao — Instagram @alequizao (https://instagram.com/alequizao) — alequizao.dev@gmail.com — https://github.com/alequizao — https://alequizao.com/

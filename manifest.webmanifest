@@ -1,0 +1,36 @@
+{
+  "name": "Nos Trilhos — Alex, Lula e Flávio",
+  "short_name": "Nos Trilhos",
+  "description": "Corrida infinita 3D grátis: escolha a turma do Alex, o Lula ou o Flávio, desvie dos trens, pegue moedas e fuja do segurança. Paródia de humor, sem fins políticos.",
+  "lang": "pt-BR",
+  "id": "/trilhos/",
+  "start_url": "/trilhos/?pwa=1",
+  "scope": "/trilhos/",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#002776",
+  "theme_color": "#002776",
+  "categories": [
+    "games"
+  ],
+  "icons": [
+    {
+      "src": "icone-192.png?v=5",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icone-512.png?v=5",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icone-maskable.png?v=5",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+*.bak*
+.htaccess
+_dados/
+*.sqlite
