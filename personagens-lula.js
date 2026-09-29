@@ -29,7 +29,7 @@ import * as THREE from 'three';
 import {
   junta, em, malha, torno, retRedondo, extruda, tubo, arco, tecido, peleMat, cabeloMat, vernizMat,
   escurece, clareia, acende, metal, criaCabeca, geoMao, geoSapato, criaPranchaJato,
-} from './personagens-base.js?v=1.0.5';
+} from './personagens-base.js?v=1.0.6';
 
 // ================= AJUDANTES LOCAIS =================
 // forma 2D a partir de uma lista de pontos [x, y]

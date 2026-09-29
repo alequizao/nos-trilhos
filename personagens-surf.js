@@ -18,7 +18,7 @@ import * as THREE from 'three';
 import {
   junta, malha, torno, tubo, extruda, formaAba, retRedondo, escurece, clareia,
   tecido, peleMat, cabeloMat, acende, criaCabeca, geoMao, geoTenis, criaPranchaJato,
-} from './personagens-base.js?v=1.0.5';
+} from './personagens-base.js?v=1.0.6';
 
 function perfilDe(P) {
   if (P.perfil) return P.perfil;

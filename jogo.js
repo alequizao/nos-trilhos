@@ -4,15 +4,15 @@
  */
 // Lula nos Trilhos — corrida infinita nos trilhos, paródia bem-humorada (Alequizão)
 import * as THREE from 'three';
-import { ic } from './icones.js?v=1.0.5';
-import { criaCorredor as modeloCorredor, criaVigia as modeloVigia } from './personagens.js?v=1.0.5';
-import { criaVisualTrem, criaVisualRampa, criaVisualBarreira, animaObjetos } from './objetos.js?v=1.0.5';
-import { criaBiomas } from './biomas.js?v=1.0.5';
-import { GEO_MOEDA, MATS_MOEDA, criaVisualPoder, animaItens } from './itens.js?v=1.0.5';
-import { iniciaRanking, rankingFim } from './ranking.js?v=1.0.5';
-import { iniciaSocial, socialFim, mostraDiariaSeDevida } from './social.js?v=1.0.5'; // prêmio diário, compartilhar, duelo
+import { ic } from './icones.js?v=1.0.6';
+import { criaCorredor as modeloCorredor, criaVigia as modeloVigia } from './personagens.js?v=1.0.6';
+import { criaVisualTrem, criaVisualRampa, criaVisualBarreira, animaObjetos } from './objetos.js?v=1.0.6';
+import { criaBiomas } from './biomas.js?v=1.0.6';
+import { GEO_MOEDA, MATS_MOEDA, criaVisualPoder, animaItens } from './itens.js?v=1.0.6';
+import { iniciaRanking, rankingFim } from './ranking.js?v=1.0.6';
+import { iniciaSocial, socialFim, mostraDiariaSeDevida } from './social.js?v=1.0.6'; // prêmio diário, compartilhar, duelo
 
-const VERSAO = '1.0.5';
+const VERSAO = '1.0.6';
 const LANE = 2.6;          // distância entre trilhos
 const GRAV = 38;
 const PULO = 14.5;
@@ -1498,8 +1498,10 @@ function colide(o) {
   if (R.prancha > 0) { scene.remove(o.g); obst.splice(obst.indexOf(o), 1); quebraPrancha(); return; }
   morre();
 }
-function atualiza(dt) {
-  R.tempo += dt;
+// física em subpassos de no máximo ~0,3 m: com quadro lento (dt = 0,05 s a 33 m/s = 1,65 m por quadro,
+// comum em celular fraco e na ponte/túnel) o passo grande fazia o pé "afundar" abaixo do teto do trem
+// na junção rampa→trem ou ao pousar de um pulo, e o jogador morria batendo em algo que não se via.
+function fisica(dt) {
   R.vel = Math.min(33, 14 + 19 * (1 - Math.exp(-R.dist / 2800)));
   R.dist += R.vel * dt;
   while (genD < R.dist + 230) geraLinha();
@@ -1520,16 +1522,22 @@ function atualiza(dt) {
 
   // chão e colisões
   let chao = 0, emTrem = null;
-  for (const o of obst.slice()) {
-    if (o.d0 > R.dist + 0.4 || o.d1 < R.dist - 0.4) continue;
-    if (Math.abs(R.x - o.x) >= o.hw + 0.3) continue;
-    if (o.tipo === 'rampa') {
-      const s = Math.max(0, Math.min(1, (R.dist - o.d0) / (o.d1 - o.d0))) * o.top;
-      if (R.y >= s - 1.1 || jato) chao = Math.max(chao, s); else colide(o);
-    } else if (o.tipo === 'trem') {
-      if (R.y >= o.top - 0.5 || jato) { chao = Math.max(chao, o.top); emTrem = o; }
+  const perto = obst.filter(o => o.d0 <= R.dist + 0.4 && o.d1 >= R.dist - 0.4);
+  // 1º as rampas: o chão da rampa já vale neste passo (antes, na junção rampa→trem, o pé ainda estava na
+  // altura do quadro anterior, abaixo de top - 0,5, e o trem contava como batida de frente)
+  for (const o of perto) {
+    if (o.tipo !== 'rampa' || Math.abs(R.x - o.x) >= o.hw + 0.3) continue;
+    const s = Math.max(0, Math.min(1, (R.dist - o.d0) / (o.d1 - o.d0))) * o.top;
+    if (R.y >= s - 1.1 || jato) chao = Math.max(chao, s); else colide(o);
+    if (estado !== 'jogando') return;
+  }
+  for (const o of perto) {
+    if (o.tipo === 'rampa' || Math.abs(R.x - o.x) >= o.hw + 0.3) continue;
+    const pe = jato ? R.y : Math.max(R.y, chao); // altura real do pé (em cima da rampa, se estiver nela)
+    if (o.tipo === 'trem') {
+      if (pe >= o.top - 0.5 || jato) { chao = Math.max(chao, o.top); emTrem = o; }
       else colide(o);
-    } else if (Math.abs(R.dist - (o.d0 + o.d1) / 2) < (o.d1 - o.d0) / 2 + 0.25 && R.y < o.y1 - 0.2 && R.y + alt > o.y0 + 0.15) colide(o); // margem generosa
+    } else if (Math.abs(R.dist - (o.d0 + o.d1) / 2) < (o.d1 - o.d0) / 2 + 0.25 && pe < o.y1 - 0.2 && pe + alt > o.y0 + 0.15) colide(o); // margem generosa
     if (estado !== 'jogando') return;
   }
   if (!jato) {
@@ -1540,6 +1548,11 @@ function atualiza(dt) {
   if (emTrem && R.noChao && !R.trens.has(emTrem.id)) { R.trens.add(emTrem.id); evento('trens'); }
   R.pedidoPulo = Math.max(0, R.pedidoPulo - dt);
   R.coyote = R.noChao ? 0.12 : Math.max(0, (R.coyote || 0) - dt);
+}
+function atualiza(dt) {
+  R.tempo += dt;
+  const nSub = Math.min(8, Math.max(1, Math.ceil(R.vel * dt / 0.3)));
+  for (let i = 0; i < nSub; i++) { fisica(dt / nSub); if (estado !== 'jogando') return; }
 
   // moedas
   const ima = R.poder.ima > 0;
@@ -1830,7 +1843,7 @@ const ALT_ARTE = { alex: 'Alex, de boné virado, jaqueta laranja e bermuda verde
   bento: 'Bento, de cabelo cacheado, moletom verde e fones no pescoço, correndo de skate', nina: 'Nina Neon, de roupa preta com luzes neon e óculos futuristas, correndo de skate',
   lula: 'Caricatura do Lula de terno azul-marinho, gravata vinho e faixa verde-amarela, correndo', flavio: 'Caricatura do Flávio de terno azul-marinho e gravata listrada, correndo',
   seguranca: 'Segurança careca de terno preto e óculos escuros com o cachorro caramelo' };
-const srcArte = a => `img/personagens/${a}.webp?v=1.0.5`;
+const srcArte = a => `img/personagens/${a}.webp?v=1.0.6`;
 function imgArte(a, cls = '', lazy = true) {
   return `<img class="${cls}" src="${srcArte(a)}" alt="${ALT_ARTE[a] || ''}" width="512" height="768" decoding="async"${lazy ? ' loading="lazy"' : ''}>`;
 }
@@ -1980,6 +1993,8 @@ $('#bt-denovo').onclick = iniciar;
 $('#bt-menu').onclick = irMenu;
 $('#bt-prancha').addEventListener('pointerdown', e => { e.stopPropagation(); usaPrancha(); });
 document.addEventListener('visibilitychange', () => { if (document.hidden) pausa(); });
+// GPU fraca/celular sem memória pode perder o contexto WebGL: pausa (o three.js restaura sozinho) em vez de seguir correndo às cegas
+canvas.addEventListener('webglcontextlost', () => pausa());
 
 // ================= LOOP =================
 let ultimo = performance.now(), fpsAcum = 0, fpsN = 0;
@@ -2004,6 +2019,16 @@ function loop(t) {
 }
 atualizaMenu(); abreEscolha(); // ao abrir, já pergunta o personagem (1ª visita obrigatória)
 mostraDiariaSeDevida(); // prêmio do dia: espera a #tela-escolha fechar e o menu aparecer
+// pré-compila os shaders da ponte, do túnel e dos obstáculos ainda na tela de carregamento: sem isso,
+// o 1º quadro na ponte/túnel travava o celular (compilação na hora) bem no meio da corrida
+try {
+  const tmp = new THREE.Group();
+  [criaVisualTrem(1), criaVisualTrem(1, true), criaVisualRampa(), ...['baixa', 'alta', 'tapume'].map(criaVisualBarreira), ...Object.keys(PODERES).map(k => criaVisualPoder(k))].forEach(o => tmp.add(o));
+  scene.add(tmp);
+  for (const nome of ['tunel', 'ponte']) { BIOMAS.forca(nome, TRECHO * 2); trechos.forEach(t => BIOMAS.ajustaTrecho(t)); renderer.compile(scene, camera); }
+  scene.remove(tmp);
+} catch (e) { console.warn('pré-compilação', e); }
+BIOMAS.forca(null); trechos.forEach(t => BIOMAS.ajustaTrecho(t));
 $('#carregando').remove();
 requestAnimationFrame(loop);
 // gancho de teste: avança a simulação em passos fixos de 1/60 s, sem depender do FPS (cb por passo; false para)
@@ -2025,4 +2050,10 @@ Object.defineProperties(window.__surf, Object.getOwnPropertyDescriptors({
   hora(h) { BIOMAS.hora(h); },
   clima(nome, ja) { BIOMAS.clima(nome, ja); },
   get climaEstado() { return BIOMAS.climaEstado; },
+  // passo(dt): avança a simulação com qualquer dt, sem desenhar (testes de quadro lento e corrida longa)
+  passo(dt = 1 / 60) {
+    if (estado === 'jogando') atualiza(dt); else if (estado === 'morrendo') atualizaMorte(dt);
+    animaHeroi(dt); atualizaCamera(dt); BIOMAS.atualiza(R ? R.dist : 0, camera.position.z, dt);
+  },
+  get moedas() { return moedas; }, get trechos() { return trechos; },
 }));

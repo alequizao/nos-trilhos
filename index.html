@@ -34,7 +34,7 @@
 "playMode":"SinglePlayer","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"BRL"},
 "author":{"@type":"Person","name":"Alequizao","email":"alequizao.dev@gmail.com","url":"https://github.com/alequizao","sameAs":["https://instagram.com/alequizao","https://github.com/alequizao"]},
 "publisher":{"@type":"Organization","name":"Alequizão","url":"https://alequizao.com/"},
-"softwareVersion":"1.0.5","datePublished":"2026-09-29","dateModified":"2026-09-29"}
+"softwareVersion":"1.0.6","datePublished":"2026-09-29","dateModified":"2026-09-29"}
 </script>
 <meta name="theme-color" content="#002776">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -47,7 +47,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilo.css?v=1.0.5">
+<link rel="stylesheet" href="estilo.css?v=1.0.6">
 </head>
 <body>
 <!-- texto para buscadores, IAs e leitores de tela (o jogo em si é desenhado no canvas) -->
@@ -187,7 +187,7 @@
 <section id="tela-ajuda" class="tela tela-painel oculto">
   <div class="painel">
     <h2><span class="h-ic hi-laranja"><svg class="ic" aria-hidden="true"><use href="#i-ajuda"/></svg></span>Como jogar</h2>
-    <img class="fim-heroi aj-seg" src="img/personagens/seguranca.webp?v=1.0.5" alt="Segurança careca de terno preto e óculos escuros com o cachorro caramelo: é dele que você foge" width="512" height="768" loading="lazy" decoding="async">
+    <img class="fim-heroi aj-seg" src="img/personagens/seguranca.webp?v=1.0.6" alt="Segurança careca de terno preto e óculos escuros com o cachorro caramelo: é dele que você foge" width="512" height="768" loading="lazy" decoding="async">
     <div class="rolagem">
     <ul class="ajuda">
       <li><span class="aj-ic aj-azul"><svg class="ic" aria-hidden="true"><use href="#i-seta-esq"/></svg><svg class="ic" aria-hidden="true"><use href="#i-seta-dir"/></svg></span><span>Arraste para os lados (ou setas / A D) para trocar de trilho.</span></li>
@@ -335,13 +335,13 @@
 <div id="carregando">Carregando…</div>
 
 <script type="importmap">{"imports":{"three":"./lib/three.module.min.js"}}</script>
-<script type="module" src="jogo.js?v=1.0.5"></script>
+<script type="module" src="jogo.js?v=1.0.6"></script>
 <script>
 if ('serviceWorker' in navigator) addEventListener('load', () => {
   // atualização forçada: procura versão nova ao abrir, ao voltar pro app e a cada 30 min;
   // quando o SW novo assume, recarrega sozinho — mas nunca no meio de uma corrida
   const jaTinha = !!navigator.serviceWorker.controller;
-  navigator.serviceWorker.register('sw.js?v=1.0.5', { updateViaCache: 'none' }).then(reg => {
+  navigator.serviceWorker.register('sw.js?v=1.0.6', { updateViaCache: 'none' }).then(reg => {
     const busca = () => reg.update().catch(() => {});
     document.addEventListener('visibilitychange', () => { if (!document.hidden) busca(); });
     setInterval(busca, 30 * 60 * 1000);

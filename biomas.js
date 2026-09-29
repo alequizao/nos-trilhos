@@ -5,7 +5,7 @@
 // Biomas da pista (só visual, nada de colisão): túnel, ponte e ciclo dia → pôr do sol → noite → amanhecer.
 // Geometrias e materiais são criados uma vez e compartilhados por todos os trechos (só liga/desliga visibilidade).
 import * as THREE from 'three';
-import { criaClima } from './clima.js?v=1.0.5';
+import { criaClima } from './clima.js?v=1.0.6';
 
 const CICLO = 1680;                    // a cada 1,68 km: cidade → túnel → cidade → ponte → cidade
 const FAIXAS = { tunel: [640, 880], ponte: [1280, 1520] };

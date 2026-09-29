@@ -23,7 +23,7 @@
 // (o personagem olha para -z; bracoD/pernaD ficam em +x).
 import * as THREE from 'three';
 import { junta, malha, torno, extruda, retRedondo, tubo, tecido, peleMat, cabeloMat, vernizMat, metal, escurece, clareia,
-  acende, criaCabeca, geoMao, geoSapato, geoTenis, criaPranchaJato } from './personagens-base.js?v=1.0.5';
+  acende, criaCabeca, geoMao, geoSapato, geoTenis, criaPranchaJato } from './personagens-base.js?v=1.0.6';
 
 // forma 2D a partir de uma lista de pontos [x, y]
 function poligono(pts) {

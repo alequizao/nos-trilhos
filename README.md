@@ -1,7 +1,7 @@
 # 🚆 Nos Trilhos — Alex, Lula e Flávio numa corrida infinita 3D
 
 [![Jogar agora](https://img.shields.io/badge/▶_Jogar_agora-alequizao.com%2Ftrilhos-e8364f?style=for-the-badge)](https://alequizao.com/trilhos/)
-![Versão](https://img.shields.io/badge/versão-1.0.5-2f6bff?style=for-the-badge)
+![Versão](https://img.shields.io/badge/versão-1.0.6-2f6bff?style=for-the-badge)
 ![Three.js](https://img.shields.io/badge/Three.js-r170-000?style=for-the-badge&logo=three.js)
 ![PWA](https://img.shields.io/badge/PWA-offline-1fc46b?style=for-the-badge)
 
@@ -43,6 +43,7 @@
 
 ## ✨ Recursos
 
+- 🎯 **Física em subpassos:** a colisão é calculada em passos de até 0,3 m, então o jogo continua justo mesmo em celular fraco ou com FPS baixo (sem "batida imaginária" ao subir da rampa para o trem).
 - 👥 **Três times, sete personagens:** a Turma do Alex (Alex, Duda, Bento e Nina), o Lula e o Flávio. O jogo pergunta quem vai correr logo ao abrir. Os modelos 3D seguem o estilo das artes, com cabeça grande, olhos expressivos, luvas, tênis cartoon e *rim light*.
 - ⚔️ **Duelo Lula × Flávio:** cada corrida soma pontos para o time do personagem, e o placar geral aparece no menu.
 - 🎁 **Recompensa diária** com sequência de dias e **compartilhar** o placar como imagem.

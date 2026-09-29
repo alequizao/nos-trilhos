@@ -9,9 +9,9 @@
 // criaCorredor(skin) escolhe o criador pelo campo skin.grupo ('surf' | 'lula' | 'flavio').
 // criaVigia() vem do personagens-lula.js (segurança com braços com cotovelo).
 // Todos retornam o mesmo formato: { root, corpo, tronco, cabeca, bracoE, bracoD, pernaE, pernaD, prancha, jato, chama }.
-import { criaCorredor as corredorSurf } from './personagens-surf.js?v=1.0.5';
-import { criaCorredor as corredorLula, criaVigia as vigiaLula } from './personagens-lula.js?v=1.0.5';
-import { criaCorredor as corredorFlavio } from './personagens-flavio.js?v=1.0.5';
+import { criaCorredor as corredorSurf } from './personagens-surf.js?v=1.0.6';
+import { criaCorredor as corredorLula, criaVigia as vigiaLula } from './personagens-lula.js?v=1.0.6';
+import { criaCorredor as corredorFlavio } from './personagens-flavio.js?v=1.0.6';
 
 const CRIADORES = { surf: corredorSurf, lula: corredorLula, flavio: corredorFlavio };
 

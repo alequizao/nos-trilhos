@@ -3,7 +3,7 @@
 // Recompensa diária, compartilhar e Duelo Lula × Flávio (módulo independente; fala com ./duelo.php).
 //
 // Uso no jogo.js:
-//   import { iniciaSocial, socialFim, mostraDiariaSeDevida } from './social.js?v=1.0.5';
+//   import { iniciaSocial, socialFim, mostraDiariaSeDevida } from './social.js?v=1.0.6';
 //   iniciaSocial({ get S() { return S; }, salvar, SKINS, trocaSkin, mostra, iniciar, audio, atualizaMenu, toast });
 //   mostraDiariaSeDevida();      // espera a #tela-escolha sumir e o menu aparecer; mostra 1x por dia
 //   socialFim({ corrida: R, pontos, moedas, dist }); // no fim de jogo: soma ao time do personagem e prepara "Desafiar amigos"
@@ -274,7 +274,7 @@ export function socialFim({ corrida, pontos, moedas, dist }) {
 export function iniciaSocial(ctx) {
   C = ctx; injetaIcones();
   if (!document.getElementById('css-social')) {
-    const l = document.createElement('link'); l.id = 'css-social'; l.rel = 'stylesheet'; l.href = new URL('social.css?v=1.0.5', import.meta.url).href;
+    const l = document.createElement('link'); l.id = 'css-social'; l.rel = 'stylesheet'; l.href = new URL('social.css?v=1.0.6', import.meta.url).href;
     document.head.appendChild(l);
   }
   // saves antigos: campos novos com valor padrão
